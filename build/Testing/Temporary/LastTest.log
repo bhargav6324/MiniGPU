@@ -1,0 +1,27 @@
+Start testing: Oct 14 10:15 IST
+----------------------------------------------------------
+1/1 Testing: LexerTests
+1/1 Test: LexerTests
+Command: "/Users/bhargavpatil/Mini GPU/build/test_lexer"
+Directory: /Users/bhargavpatil/Mini GPU/build
+"LexerTests" start time: Oct 14 10:15 IST
+Output:
+----------------------------------------------------------
+[PASS] Basic tokenization
+[PASS] Arithmetic operators
+[PASS] Keywords and identifiers
+[PASS] Integer literals
+[PASS] Source positions
+[PASS] Invalid character detection
+[PASS] Empty input
+
+All lexer tests passed!
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"LexerTests" end time: Oct 14 10:15 IST
+"LexerTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 14 10:15 IST

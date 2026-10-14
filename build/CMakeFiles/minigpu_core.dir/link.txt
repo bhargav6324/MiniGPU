@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminigpu_core.a CMakeFiles/minigpu_core.dir/src/lexer.cpp.o
+/usr/bin/ranlib libminigpu_core.a

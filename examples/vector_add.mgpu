@@ -1,0 +1,3 @@
+kernel calculate(a, b, output, n) {
+    output[i] = a[i] * 2 + b[i];
+}

@@ -1,0 +1,6 @@
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/minigpu_core.dir
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/minigpu.dir
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/test_lexer.dir
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/test.dir
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/edit_cache.dir
+/Users/bhargavpatil/Mini GPU/build/CMakeFiles/rebuild_cache.dir
