@@ -10,6 +10,7 @@ namespace minigpu {
 enum class TokenType {
   // Keywords
   Kernel,
+  Int,
 
   // Identifiers and literals
   Identifier,

@@ -1,0 +1,16 @@
+# Build artifacts
+build/
+bin/
+minigpu
+*.o
+*.a
+*.so
+*.dylib
+
+# macOS
+.DS_Store
+
+# Tooling
+compile_commands.json
+.vscode/
+.idea/

@@ -1,1 +1,0 @@
-/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/minigpu.dir/src/main.cpp.o -o minigpu  libminigpu_core.a

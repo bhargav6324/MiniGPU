@@ -47,12 +47,14 @@ void testOperators() {
 
 // Test 3: Keywords and identifiers
 void testKeywords() {
-  Lexer lexer("kernel calculate");
+  Lexer lexer("kernel int calculate integer");
 
   auto tokens = lexer.tokenize();
 
   assert(tokens[0].type == TokenType::Kernel);
-  assert(tokens[1].type == TokenType::Identifier);
+  assert(tokens[1].type == TokenType::Int);
+  assert(tokens[2].type == TokenType::Identifier);
+  assert(tokens[3].type == TokenType::Identifier);
 
   std::cout << "[PASS] Keywords and identifiers\n";
 }

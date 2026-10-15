@@ -1,3 +1,4 @@
-kernel calculate(a, b, output, n) {
-    output[i] = a[i] * 2 + b[i];
+
+kernel calculate(int* a, int* b, int* output, int n) {
+    output[i] = a[i] * 2 + b[i*2] + c;
 }

@@ -1,5 +1,8 @@
+#include "ir_generator.hpp"
 #include "lexer.hpp"
-
+#include "optimizer.hpp"
+#include "parser.hpp"
+#include "semantic.hpp"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -13,6 +16,8 @@ std::string tokenTypeToString(TokenType type) {
   switch (type) {
   case TokenType::Kernel:
     return "KEYWORD_KERNEL";
+  case TokenType::Int:
+    return "KEYWORD_INT";
   case TokenType::Identifier:
     return "IDENTIFIER";
   case TokenType::Integer:
@@ -54,8 +59,12 @@ std::string tokenTypeToString(TokenType type) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 3 || std::string(argv[1]) != "--tokens") {
-    std::cerr << "Usage: minigpu --tokens <source.mgpu>\n";
+  if (argc != 3 ||
+      (std::string(argv[1]) != "--tokens" &&
+       std::string(argv[1]) != "--check" && std::string(argv[1]) != "--ir" &&
+       std::string(argv[1]) != "--ir-opt")) {
+    std::cerr
+        << "Usage: minigpu --tokens|--check|--ir|--ir-opt <source.mgpu>\n";
     return 1;
   }
 
@@ -79,6 +88,26 @@ int main(int argc, char *argv[]) {
     // Create lexer and tokenize source
     Lexer lexer(source);
     std::vector<Token> tokens = lexer.tokenize();
+
+    if (std::string(argv[1]) == "--ir" || std::string(argv[1]) == "--ir-opt") {
+      auto program = Parser(std::move(tokens)).parse();
+      auto kernel = IRGenerator().generate(program);
+
+      if (std::string(argv[1]) == "--ir-opt") {
+        foldConstants(kernel);
+        eliminateDeadCode(kernel);
+      }
+
+      std::cout << printIR(kernel);
+      return 0;
+    }
+
+    if (std::string(argv[1]) == "--check") {
+      auto program = Parser(std::move(tokens)).parse();
+      SemanticAnalyzer().analyze(program);
+      std::cout << "Phase 2 checks passed for kernel " << program.name << "\n";
+      return 0;
+    }
 
     // Print tokens
     std::cout << "TOKEN TYPE\tLEXEME\tLINE\tCOLUMN\n";

@@ -60,8 +60,9 @@ Token Lexer::scanIdentifier() {
 
   std::string text = source_.substr(start, position_ - start);
 
-  TokenType type =
-      (text == "kernel") ? TokenType::Kernel : TokenType::Identifier;
+  TokenType type = TokenType::Identifier;
+  if (text == "kernel") type = TokenType::Kernel;
+  if (text == "int") type = TokenType::Int;
 
   return Token{type, text, startLine, startColumn};
 }

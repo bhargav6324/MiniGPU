@@ -10,6 +10,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Core compiler library
 add_library(minigpu_core
     src/lexer.cpp
+    src/parser.cpp
+    src/semantic.cpp
+    src/ir.cpp
+    src/ir_generator.cpp
+    src/optimizer.cpp
 )
 
 # Header files
@@ -51,3 +56,19 @@ add_test(
     NAME LexerTests
     COMMAND test_lexer
 )
+
+add_executable(test_phase2 tests/test_phase2.cpp)
+target_link_libraries(test_phase2 PRIVATE minigpu_core)
+add_test(NAME Phase2Tests COMMAND test_phase2)
+
+add_executable(test_ir tests/test_ir.cpp)
+target_link_libraries(test_ir PRIVATE minigpu_core)
+add_test(NAME IRTests COMMAND test_ir)
+
+add_executable(test_optimizer tests/test_optimizer.cpp)
+target_link_libraries(test_optimizer PRIVATE minigpu_core)
+add_test(NAME OptimizerTests COMMAND test_optimizer)
+
+add_executable(test_dce tests/test_dce.cpp)
+target_link_libraries(test_dce PRIVATE minigpu_core)
+add_test(NAME DCETests COMMAND test_dce)
