@@ -1,0 +1,4 @@
+kernel optimized_demo(int* input, int* output, int count) {
+    int unused = (i + 3) * 7;
+    output[i] = input[i] + (10 * 4);
+}

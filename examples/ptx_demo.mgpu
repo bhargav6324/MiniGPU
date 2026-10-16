@@ -1,0 +1,3 @@
+kernel calculate(int* a, int* output, int n) {
+    output[i] = a[i] + (10 * 4);
+}

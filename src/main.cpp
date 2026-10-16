@@ -2,6 +2,7 @@
 #include "lexer.hpp"
 #include "optimizer.hpp"
 #include "parser.hpp"
+#include "ptx_generator.hpp"
 #include "semantic.hpp"
 #include <fstream>
 #include <iostream>
@@ -59,12 +60,19 @@ std::string tokenTypeToString(TokenType type) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 3 ||
-      (std::string(argv[1]) != "--tokens" &&
-       std::string(argv[1]) != "--check" && std::string(argv[1]) != "--ir" &&
-       std::string(argv[1]) != "--ir-opt")) {
+  const std::string mode = argc > 1 ? argv[1] : "";
+
+  const bool validStandard =
+      argc == 3 && (mode == "--tokens" || mode == "--check" || mode == "--ir" ||
+                    mode == "--ir-opt");
+
+  const bool emitPTX = mode == "--ptx" || mode == "--ptx-raw";
+  const bool validPTX = argc == 4 && emitPTX;
+
+  if (!validStandard && !validPTX) {
     std::cerr
-        << "Usage: minigpu --tokens|--check|--ir|--ir-opt <source.mgpu>\n";
+        << "Usage: minigpu --tokens|--check|--ir|--ir-opt <source.mgpu>\n"
+        << "       minigpu --ptx|--ptx-raw <source.mgpu> <count-parameter>\n";
     return 1;
   }
 
@@ -89,16 +97,21 @@ int main(int argc, char *argv[]) {
     Lexer lexer(source);
     std::vector<Token> tokens = lexer.tokenize();
 
-    if (std::string(argv[1]) == "--ir" || std::string(argv[1]) == "--ir-opt") {
+    if (mode == "--ir" || mode == "--ir-opt" || emitPTX) {
       auto program = Parser(std::move(tokens)).parse();
       auto kernel = IRGenerator().generate(program);
 
-      if (std::string(argv[1]) == "--ir-opt") {
+      if (mode == "--ir-opt" || mode == "--ptx") {
         foldConstants(kernel);
         eliminateDeadCode(kernel);
       }
 
-      std::cout << printIR(kernel);
+      if (emitPTX) {
+        std::cout << PTXGenerator().generate(kernel, argv[3]);
+      } else {
+        std::cout << printIR(kernel);
+      }
+
       return 0;
     }
 

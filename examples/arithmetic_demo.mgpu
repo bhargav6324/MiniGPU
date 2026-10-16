@@ -1,0 +1,6 @@
+kernel arithmetic(int length, int* input, int factor, int* result) {
+    int value = -input[i * 2];
+    value = value * factor;
+    int adjusted = value - length;
+    result[i] = adjusted / 3;
+}

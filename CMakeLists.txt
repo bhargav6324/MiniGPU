@@ -15,6 +15,7 @@ add_library(minigpu_core
     src/ir.cpp
     src/ir_generator.cpp
     src/optimizer.cpp
+    src/ptx_generator.cpp
 )
 
 # Header files
@@ -72,3 +73,7 @@ add_test(NAME OptimizerTests COMMAND test_optimizer)
 add_executable(test_dce tests/test_dce.cpp)
 target_link_libraries(test_dce PRIVATE minigpu_core)
 add_test(NAME DCETests COMMAND test_dce)
+
+add_executable(test_ptx tests/test_ptx.cpp)
+target_link_libraries(test_ptx PRIVATE minigpu_core)
+add_test(NAME PTXTests COMMAND test_ptx)
